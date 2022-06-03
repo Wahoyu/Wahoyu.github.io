@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+  
+  <entry>
+    <title>解决Linux环境变量每次要source /etc/profile问题</title>
+    <link href="/2022/06/03/%E8%A7%A3%E5%86%B3Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E6%AF%8F%E6%AC%A1%E8%A6%81source-etc-profile%E9%97%AE%E9%A2%98/"/>
+    <url>/2022/06/03/%E8%A7%A3%E5%86%B3Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E6%AF%8F%E6%AC%A1%E8%A6%81source-etc-profile%E9%97%AE%E9%A2%98/</url>
+    
+    <content type="html"><![CDATA[<p>Linux的profile与权限相关问题</p><span id="more"></span><h1 id="解决Linux环境变量每次要source-x2F-etc-x2F-profile问题"><a href="#解决Linux环境变量每次要source-x2F-etc-x2F-profile问题" class="headerlink" title="解决Linux环境变量每次要source &#x2F;etc&#x2F;profile问题"></a>解决Linux环境变量每次要source &#x2F;etc&#x2F;profile问题</h1><blockquote><p><strong>问题：</strong></p></blockquote><p>在&#x2F;etc&#x2F;profile中添加环境变量后，是使用<code>source /etc/profile</code>编译后只能在当前终端生效；重新开启一个终端后，该环境变量失效。</p><p>每次使用交叉编译链之前都要进行<code>source /etc/profile</code>才能进行编译</p><blockquote><p><strong>解决方法</strong></p></blockquote><p>使用<code>su - root</code>进入系统instead of <code>su</code>问题解决；</p><p>因为设置的环境变量，并没有真正生效，只是使用source 命令让临时运行而已。</p><blockquote><p><strong>原理上解析Linux中sudo,su与su -的异同</strong></p></blockquote><p>在linux系统中，由于root的权限过大，一般情况都不使用它。只有在一些特殊情况下才采用登录root执行管理任务，一般情况下临时使用root权限多采用su和sudo命令。<br><br></br></p><h4 id="su-命令（切换工作目录）："><a href="#su-命令（切换工作目录）：" class="headerlink" title="su - 命令（切换工作目录）："></a>su - 命令（切换工作目录）：</h4><p>su -，su -l或su –login 命令改变身份时，也同时变更工作目录，以及HOME，SHELL，USER，LOGNAME。此外，也会变更PATH变量。用su -命令则默认转换成成root用户了。</p><h4 id="su-命令："><a href="#su-命令：" class="headerlink" title="su 命令："></a>su 命令：</h4><p>su为switch user，即切换用户的简写。</p><p>格式为两种：</p><p>su -l USERNAME（-l为login，即登陆的简写）</p><p>su USERNAME</p><p>如果不指定USERNAME（用户名），默认即为root，所以切换到root的身份的命令即为：su -root或su -，su root 或su。</p><h4 id="su-USERNAME，与su-USERNAME的不同之处如下："><a href="#su-USERNAME，与su-USERNAME的不同之处如下：" class="headerlink" title="su USERNAME，与su - USERNAME的不同之处如下："></a>su USERNAME，与su - USERNAME的不同之处如下：</h4><p>su - USERNAME切换用户后，同时切换到新用户的工作环境中。</p><p>su USERNAME切换用户后，不改变原用户的工作目录，及其他环境变量目录。</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>Linux</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>常用操作的记录</title>
+    <link href="/2022/05/31/%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E8%AE%B0%E5%BD%95/"/>
+    <url>/2022/05/31/%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E8%AE%B0%E5%BD%95/</url>
+    
+    <content type="html"><![CDATA[<p>Hexo操作（持续更新）</p><span id="more"></span><h2 id="2022-6-1更新常用操作"><a href="#2022-6-1更新常用操作" class="headerlink" title="2022.6.1更新常用操作"></a>2022.6.1更新常用操作</h2><p><br></br></p><blockquote><p>文章头文件</p></blockquote><p>title(标题)、index_img(显示在主页的图片)、date(文章显示时间)、tags(标签)<br><br><a href="https://hexo.io/zh-cn/docs/front-matter">https://hexo.io/zh-cn/docs/front-matter</a></p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java">---<br>title: 常用操作记录<br>index_img: /image/MyFirstBlog.jpg<br>date: <span class="hljs-number">2022</span>-<span class="hljs-number">05</span>-<span class="hljs-number">31</span> 09:<span class="hljs-number">40</span>:<span class="hljs-number">34</span><br>tags:<br>- Hexo<br>- Fluid<br>---<br></code></pre></td></tr></table></figure><p><br></br></p><blockquote><p>文章摘要</p></blockquote><p><a href="https://hexo.fluid-dev.com/docs/guide/#%E6%96%87%E7%AB%A0%E6%91%98%E8%A6%81">https://hexo.fluid-dev.com/docs/guide/#%E6%96%87%E7%AB%A0%E6%91%98%E8%A6%81</a><br><br></br><br></br></p><blockquote><p>开启评论</p></blockquote><p>开启评论———–指导（建议使用国内）<br><br><a href="https://hexo.fluid-dev.com/docs/guide/#%E8%AF%84%E8%AE%BA">https://hexo.fluid-dev.com/docs/guide/#%E8%AF%84%E8%AE%BA</a></p><p>valine官方网站（注册后台服务器）</p><p><a href="https://www.jianshu.com/p/b9e73c881729">https://www.jianshu.com/p/b9e73c881729</a></p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>Hexo</tag>
+      
+      <tag>Fluid</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="/2022/05/31/hello-world/"/>
+    <url>/2022/05/31/hello-world/</url>
+    
+    <content type="html"><![CDATA[<p>HelloWorld表示尊敬！</p><span id="more"></span><p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span><br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo server<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo generate<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo deploy<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>Hexo</tag>
+      
+      <tag>Fluid</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  
+</search>
