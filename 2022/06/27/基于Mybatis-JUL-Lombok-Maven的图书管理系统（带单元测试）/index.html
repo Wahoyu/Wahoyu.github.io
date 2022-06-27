@@ -1,0 +1,941 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/bear.jpg">
+  <link rel="icon" href="/img/bear.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Wahoyu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="本项目是基于Mybatis+JUL+Lombok+Maven的图书管理系统（带单元测试）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于Mybatis的图书管理系统">
+<meta property="og:url" content="http://example.com/2022/06/27/%E5%9F%BA%E4%BA%8EMybatis-JUL-Lombok-Maven%E7%9A%84%E5%9B%BE%E4%B9%A6%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%EF%BC%88%E5%B8%A6%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%EF%BC%89/index.html">
+<meta property="og:site_name" content="Wahoyu&#39;s Blog">
+<meta property="og:description" content="本项目是基于Mybatis+JUL+Lombok+Maven的图书管理系统（带单元测试）">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/image/%E4%B8%BB%E6%A0%87%E9%A2%98%E5%9B%BE%E7%89%87/22.06.27.jpg">
+<meta property="article:published_time" content="2022-06-27T07:20:44.000Z">
+<meta property="article:modified_time" content="2022-06-27T07:35:27.256Z">
+<meta property="article:author" content="Wahoyu">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="Mybatis">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/image/%E4%B8%BB%E6%A0%87%E9%A2%98%E5%9B%BE%E7%89%87/22.06.27.jpg">
+  
+  
+  
+  <title>基于Mybatis的图书管理系统 - Wahoyu&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Wahoyu&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="基于Mybatis的图书管理系统"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-06-27 15:20" pubdate>
+          2022年6月27日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          24k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          204 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">基于Mybatis的图书管理系统</h1>
+            
+            <div class="markdown-body">
+              
+              <p>本项目是基于Mybatis+JUL+Lombok+Maven的图书管理系统（带单元测试）</p>
+<span id="more"></span>
+
+
+
+<h2 id="项目需求："><a href="#项目需求：" class="headerlink" title="项目需求："></a>项目需求：</h2><ul>
+<li><p><input checked="" disabled="" type="checkbox"> 
+在线录入学生信息和书籍信息</p>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+在线录入借阅信息</p>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+查询书籍信息列表</p>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+查询学生信息列表</p>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+查询借阅信息列表</p>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+完整的日志系统</p>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+Maven打包项目jar并在桌面运行</p>
+</li>
+</ul>
+<p>GitHub链接（附带jar包与sql文件）：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Wahoyu/BookManageMent-Mybatis" title="https://github.com/Wahoyu/BookManageMent-Mybatis">https://github.com/Wahoyu/BookManageMent-Mybatis</a></p>
+<h2 id="设计数据库"><a href="#设计数据库" class="headerlink" title="设计数据库"></a>设计数据库</h2><h3 id="建立数据库（book-manage）"><a href="#建立数据库（book-manage）" class="headerlink" title="建立数据库（book_manage）"></a>建立数据库（book_manage）</h3><p>字符集要修改，否则可能出现乱码</p>
+<p><img src="/image/22.06.27/image_Hg9JN7wbuE.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="创建表"><a href="#创建表" class="headerlink" title="创建表"></a>创建表</h3><p>学生表（student）:</p>
+<p><img src="/image/22.06.27/image_fMKaaMzQeu.png" srcset="/img/loading.gif" lazyload></p>
+<p>书籍表(book)</p>
+<p><img src="/image/22.06.27/image_KWKhubcCx5.png" srcset="/img/loading.gif" lazyload></p>
+<p>书籍借阅信息(borrow)</p>
+<p><img src="/image/22.06.27/image_MDMhkr5A_L.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="设置外键"><a href="#设置外键" class="headerlink" title="设置外键"></a>设置外键</h3><p>注意，外键设置在borrow表，可以理解为一个二维表。</p>
+<p><img src="/image/22.06.27/image_75zEfqRmKK.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="设置删除外键的触发器"><a href="#设置删除外键的触发器" class="headerlink" title="设置删除外键的触发器"></a>设置删除外键的触发器</h3><p>注意，触发器设置在book和student表。</p>
+<p>被设计触发器的表并不是外键表，而是进行操作的表。</p>
+<p>我设计一个书籍信息表，设计一个学生表，设计一个学生借书表，外键存在于学生借书表（理解为二维表），触发器存在于学生表和书籍信息表（理解为一维表）。</p>
+<p><img src="/image/22.06.27/image_4DAZskfU9L.png" srcset="/img/loading.gif" lazyload></p>
+<p>student表中触发器的命令是：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">FROM</span> borrow <span class="hljs-keyword">where</span> sid <span class="hljs-operator">=</span> old.sid<br></code></pre></td></tr></table></figure>
+
+<p>可以看到触发器中是delete,触发器本身的触发条件的定义也是delete，二者本身其实毫无关系。该语句联系到外部的”删除”，可以解释为</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs xml">在删除学生表中的信息之前，要删除借阅表中进行约束的外键，因为进行的是删除操作，所以要去old表中寻找sid<br>（从借阅表中删除你删除的sid对应的那行外键）<br></code></pre></td></tr></table></figure>
+
+<p>另一侧book表同理</p>
+<p><img src="/image/22.06.27/image_PfB65z6Sgz.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="进行测试"><a href="#进行测试" class="headerlink" title="进行测试"></a>进行测试</h3><p>我们写一个学生，写一本书，写一个借阅关系。</p>
+<p><img src="/image/22.06.27/image_7TcTRYOna9.png" srcset="/img/loading.gif" lazyload></p>
+<p>发现删除学生<strong>或者</strong>书后，borrow对应的借阅行也随之删除。触发器设置成功。</p>
+<p>下面我们实现需求1：在线录入书籍信息，学生信息。</p>
+<h2 id="创建Maven项目"><a href="#创建Maven项目" class="headerlink" title="创建Maven项目"></a>创建Maven项目</h2><p><img src="/image/22.06.27/image__eRcHGmwtB.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="pom-xml中写入依赖"><a href="#pom-xml中写入依赖" class="headerlink" title="pom.xml中写入依赖"></a>pom.xml中写入依赖</h3><p>(Mybatis+jdbc+JUnit+Lombok)</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--pom.xml--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span><br><br>    <span class="hljs-comment">&lt;!--Lombok--&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.projectlombok<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>lombok<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.18.22<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>provided<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br>    <br>    <span class="hljs-comment">&lt;!--JUnit5--&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.junit.jupiter<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>junit-jupiter<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>5.8.1<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>test<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br>    <br>    <span class="hljs-comment">&lt;!--JDBC--&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>mysql<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>mysql-connector-java<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>8.0.27<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br>    <br>    <span class="hljs-comment">&lt;!--Mybatis--&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.mybatis<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>mybatis<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.5.7<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br>    <br><span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span><br><br><br></code></pre></td></tr></table></figure>
+
+<p>配置后进行Maven加载</p>
+<p><img src="/image/22.06.27/image_xO50OenHIi.png" srcset="/img/loading.gif" lazyload></p>
+<p>测试</p>
+<p><img src="/image/22.06.27/image_Z-PtXW13yn.png" srcset="/img/loading.gif" lazyload></p>
+<p>项目运行成功。</p>
+<h2 id="IDEA连接数据库"><a href="#IDEA连接数据库" class="headerlink" title="IDEA连接数据库"></a>IDEA连接数据库</h2><p><img src="/image/22.06.27/image_WIBfnXr571.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/image/22.06.27/image_cWtulSSW6K.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="测试Insert功能"><a href="#测试Insert功能" class="headerlink" title="测试Insert功能"></a>测试Insert功能</h2><h3 id="Mybatis配置文件mybatis-config-xml"><a href="#Mybatis配置文件mybatis-config-xml" class="headerlink" title="Mybatis配置文件mybatis-config.xml"></a>Mybatis配置文件mybatis-config.xml</h3><p>在默认的文件夹中创建mybatis文件mybatis-config.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span> ?&gt;</span><br><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">configuration</span></span><br><span class="hljs-meta">        <span class="hljs-keyword">PUBLIC</span> <span class="hljs-string">&quot;-//mybatis.org//DTD Config 3.0//EN&quot;</span></span><br><span class="hljs-meta">        <span class="hljs-string">&quot;http://mybatis.org/dtd/mybatis-3-config.dtd&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">configuration</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">environments</span> <span class="hljs-attr">default</span>=<span class="hljs-string">&quot;development&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">environment</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;development&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">transactionManager</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;JDBC&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">dataSource</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;POOLED&quot;</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;driver&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;com.mysql.cj.jdbc.Driver&quot;</span>/&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;url&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;jdbc:mysql://localhost:3306/book_manage&quot;</span>/&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;username&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;root&quot;</span>/&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;password&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;123456&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">dataSource</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">environment</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">environments</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">configuration</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>报错1：显示dtd注册</p>
+<p>解决方法：在设置中添加<code>&quot;http://mybatis.org/dtd/mybatis-3-config.dtd&quot;</code>到默认dtd中</p>
+<p><img src="/image/22.06.27/image_pn-o1XjO72.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="定义实体类（Lombok）"><a href="#定义实体类（Lombok）" class="headerlink" title="定义实体类（Lombok）"></a>定义实体类（Lombok）</h3><p>student</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> book.manage.entity;<br><br><span class="hljs-keyword">import</span> lombok.Data;<br><br><span class="hljs-meta">@Data</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Student</span> &#123;<br>    <span class="hljs-type">int</span> sid;<br>    <span class="hljs-keyword">final</span> String name;<br>    <span class="hljs-keyword">final</span> String sex;<br>    <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> grade;<br>&#125;<br><br><br></code></pre></td></tr></table></figure>
+
+<p>Book</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> book.manage.entity;<br><br><span class="hljs-keyword">import</span> lombok.Data;<br><br><span class="hljs-meta">@Data</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Book</span> &#123;<br>    <span class="hljs-type">int</span> bid;<br>    <span class="hljs-keyword">final</span> String title;<br>    <span class="hljs-keyword">final</span> String desc;<br>    <span class="hljs-keyword">final</span> <span class="hljs-type">double</span> price;<br>&#125;<br><br><br></code></pre></td></tr></table></figure>
+
+<p>我们发现数据库中的enum，在实体类中我们定义的是String</p>
+<p>数据库中的decimal,我们定义的是double</p>
+<p>由此可见并不需要完全对应，只要能让数值进行大致对应即可。</p>
+<h3 id="配置mybatis-xml中的mapper"><a href="#配置mybatis-xml中的mapper" class="headerlink" title="配置mybatis.xml中的mapper"></a>配置mybatis.xml中的mapper</h3><p>在mybatis-config.xml中进行配置mapper</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span> ?&gt;</span><br><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">configuration</span></span><br><span class="hljs-meta">        <span class="hljs-keyword">PUBLIC</span> <span class="hljs-string">&quot;-//mybatis.org//DTD Config 3.0//EN&quot;</span></span><br><span class="hljs-meta">        <span class="hljs-string">&quot;http://mybatis.org/dtd/mybatis-3-config.dtd&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">configuration</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">environments</span> <span class="hljs-attr">default</span>=<span class="hljs-string">&quot;development&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">environment</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;development&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">transactionManager</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;JDBC&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">dataSource</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;POOLED&quot;</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;driver&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;com.mysql.cj.jdbc.Driver&quot;</span>/&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;url&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;jdbc:mysql://localhost:3306/book_manage&quot;</span>/&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;username&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;root&quot;</span>/&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;password&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;123456&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">dataSource</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">environment</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">environments</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">mappers</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">mapper</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;book.manage.mapper.BookMapper&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">mappers</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">configuration</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>问题1：我记得有一个作用整个包,就小写的是什么来着？</p>
+<p>答：是mybatis-config.xml中可以对实体类整个包进行默认读取，mapper.xml中可以直接使用别名以来连接接口方法和实体类进行映射关系的构造。</p>
+<p>问题2：使用接口注解是什么实现流程？使用mapper.xml是什么操作流程？</p>
+<p>①接口注解：用resources方法读取mybatis配置文件，可以知道mapper接口文件的位置，然后opensession相当于打开了一次会话，读取mapper相当于打开了一个映射关系合集。</p>
+<p>②mapper配置文件：使用简单的IO方法读取mybatis配置文件。配置文件读取了mapper.xml映射规则将接口和实体类进行连接。Main调用接口，接口调用实体类按照之前设定的关系进行连接。</p>
+<h3 id="创建接口-用注解代替mapper-xml"><a href="#创建接口-用注解代替mapper-xml" class="headerlink" title="创建接口(用注解代替mapper.xml)"></a>创建接口(用注解代替mapper.xml)</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> book.manage.mapper;<br><br><span class="hljs-keyword">import</span> book.manage.entity.Student;<br><span class="hljs-keyword">import</span> org.apache.ibatis.annotations.Insert;<br><span class="hljs-keyword">import</span> org.apache.ibatis.annotations.Select;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">BookMapper</span> &#123;<br>    <span class="hljs-meta">@Insert(&quot;insert into student(name,sex,grade) value(#&#123;name&#125;,#&#123;sex&#125;,#&#123;grade&#125;)&quot;)</span><br>    <span class="hljs-type">int</span> <span class="hljs-title function_">addStudent</span><span class="hljs-params">(Student student)</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="Main进行测试"><a href="#Main进行测试" class="headerlink" title="Main进行测试"></a>Main进行测试</h3><p>SqlSessionfactorybuilder(读取mybatis.xml)→factory</p>
+<p>factory.opensession()→sqlssion</p>
+<p>sqlssion.getmapper(mapper)→mapper</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> book.manage;<br><br><span class="hljs-keyword">import</span> book.manage.entity.Student;<br><span class="hljs-keyword">import</span> book.manage.mapper.BookMapper;<br><span class="hljs-keyword">import</span> org.apache.ibatis.io.Resources;<br><span class="hljs-keyword">import</span> org.apache.ibatis.session.SqlSession;<br><span class="hljs-keyword">import</span> org.apache.ibatis.session.SqlSessionFactory;<br><span class="hljs-keyword">import</span> org.apache.ibatis.session.SqlSessionFactoryBuilder;<br><span class="hljs-keyword">import</span> org.apache.ibatis.session.defaults.DefaultSqlSessionFactory;<br><br><span class="hljs-keyword">import</span> java.io.FileInputStream;<br><span class="hljs-keyword">import</span> java.io.FileNotFoundException;<br><span class="hljs-keyword">import</span> java.io.IOException;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Main</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> IOException &#123;<br>        <span class="hljs-type">SqlSessionFactory</span> <span class="hljs-variable">factory</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SqlSessionFactoryBuilder</span>().build(Resources.getResourceAsReader(<span class="hljs-string">&quot;mybatis-config.xml&quot;</span>));<br>        <span class="hljs-keyword">try</span>(<span class="hljs-type">SqlSession</span> <span class="hljs-variable">session</span> <span class="hljs-operator">=</span> factory.openSession(<span class="hljs-literal">true</span>))&#123;<br>            <span class="hljs-type">BookMapper</span> <span class="hljs-variable">mapper</span> <span class="hljs-operator">=</span> session.getMapper(BookMapper.class);<br><br>            System.out.println(mapper.addStudent(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Student</span>(<span class="hljs-string">&quot;小明&quot;</span>,<span class="hljs-string">&quot;男&quot;</span>,<span class="hljs-number">2019</span>)));<br>        &#125;<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>报错2：传入数据时候，由于lombok的构造参数，默认输入的是sid,</p>
+<p>解决办法：①删除Student中的<code>@AllArgsConstructor</code>,再插入时就会与接口编写的sql语句进行对应②在接口中形参设置为<code>Student student</code>③给实体类的变量加上final（final加了就会去找没有sid的构造函数，因为数据库字段非空，sid可以自增）</p>
+<p>报错3:进行Insert操作的测试时，没有读取到mybatis-comfig.xml文件</p>
+<p><img src="/image/22.06.27/image_u3xO_IuiMX.png" srcset="/img/loading.gif" lazyload></p>
+<p>原因：读取resources文件的函数用错</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//错误代码</span><br><span class="hljs-keyword">new</span> <span class="hljs-title class_">SqlSessionFactoryBuilder</span>().build(<span class="hljs-keyword">new</span> <span class="hljs-title class_">FileInputStream</span>(<span class="hljs-string">&quot;mybatis-config.xml&quot;</span>));<br><br><span class="hljs-comment">//正确代码</span><br><span class="hljs-keyword">new</span> <span class="hljs-title class_">SqlSessionFactoryBuilder</span>().build(Resources.getResourceAsReader(<span class="hljs-string">&quot;mybatis-config.xml&quot;</span>));<br><br></code></pre></td></tr></table></figure>
+
+<p><code>new FileInputStream</code>读取文件时必须加上详细的文件地址，<code>Resources.getResourceAsReader</code>可以直接读取resources文件夹里面的文件</p>
+<h3 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h3><p>生效了一行</p>
+<p><img src="/image/22.06.27/image_xUUMzIAz4e.png" srcset="/img/loading.gif" lazyload></p>
+<p>数据库结果</p>
+<p><img src="/image/22.06.27/image_UTQ9zlBZnt.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/image/22.06.27/image_hVsMuNA0WJ.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="插入书籍信息同理"><a href="#插入书籍信息同理" class="headerlink" title="插入书籍信息同理"></a>插入书籍信息同理</h3><p>报错：插入数据失败</p>
+<p>解决：</p>
+<p>①书的描述不能使用”<code>DESC</code>“作为关键字，<code>DESC</code>时数据库排序的关键字，把<code>DESC</code>换成<code>des</code>成功插入。</p>
+<p><strong>②或者给sql语句中的desc加上单引号，变成’desc’,如果是关键字就要加上飘。</strong></p>
+<p>主要思路：</p>
+<p>①创建实体类</p>
+<p>②编写Mapper.java接口</p>
+<p>③编写Main</p>
+<h2 id="优化sqlsession"><a href="#优化sqlsession" class="headerlink" title="优化sqlsession"></a>优化sqlsession</h2><p><em><strong>用SqlUtil创建sqlsession</strong></em></p>
+<p>将创建sqlsession的过程单独放在一个工具类中,只需要在主函数中对mapper文件进行getmapper即可。此项目再次简化，将创建mapper的过程也放在SqlUtil过程中。</p>
+<p>SqlSessionfactorybuilder(读取mybatis.xml)→factory</p>
+<p>factory.opensession()→sqlssion</p>
+<p>sqlssion.getmapper(mapper)→mapper</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> book.manage.sql;<br><br><span class="hljs-keyword">import</span> book.manage.mapper.BookMapper;<br><span class="hljs-keyword">import</span> org.apache.ibatis.io.Resources;<br><span class="hljs-keyword">import</span> org.apache.ibatis.session.SqlSession;<br><span class="hljs-keyword">import</span> org.apache.ibatis.session.SqlSessionFactory;<br><span class="hljs-keyword">import</span> org.apache.ibatis.session.SqlSessionFactoryBuilder;<br><br><span class="hljs-keyword">import</span> java.io.IOException;<br><span class="hljs-keyword">import</span> java.util.function.Consumer;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> Wahoyu* </span><br><span class="hljs-comment">/</span><br><span class="hljs-comment">public class SqlUtil &#123;</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">    private SqlUtil()&#123;&#125;</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">    private static SqlSessionFactory factory;</span><br><span class="hljs-comment">    static &#123;</span><br><span class="hljs-comment">        try &#123;</span><br><span class="hljs-comment">            factory = new SqlSessionFactoryBuilder().build(Resources.getResourceAsReader(&quot;mybatis-config.xml&quot;));</span><br><span class="hljs-comment">        &#125; catch (IOException e) &#123;</span><br><span class="hljs-comment">            e.printStackTrace();</span><br><span class="hljs-comment">        &#125;</span><br><span class="hljs-comment">    &#125;</span><br><span class="hljs-comment">    public static void doSqlWork(Consumer&lt;BookMapper&gt; consumer)&#123;</span><br><span class="hljs-comment">        try(SqlSession sqlSession = factory.openSession(true))&#123;</span><br><span class="hljs-comment">            BookMapper bookMapper = sqlSession.getMapper(BookMapper.class);</span><br><span class="hljs-comment">            consumer.accept(bookMapper);</span><br><span class="hljs-comment">        &#125;</span><br><span class="hljs-comment">    &#125;</span><br><span class="hljs-comment">&#125;</span><br><span class="hljs-comment"></span><br><span class="hljs-comment"></span><br></code></pre></td></tr></table></figure>
+
+<p>这样主函数就可以直接创建sqlsession,之间创建不同的mapper,针对mapper很多的情况非常方便。</p>
+<h2 id="Main主菜单格式"><a href="#Main主菜单格式" class="headerlink" title="Main主菜单格式"></a>Main主菜单格式</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> book.manage;<br><br><br><span class="hljs-keyword">import</span> java.io.IOException;<br><span class="hljs-keyword">import</span> java.util.Scanner;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Main</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> IOException &#123;<br>        <span class="hljs-keyword">try</span> (<span class="hljs-type">Scanner</span> <span class="hljs-variable">scanner</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Scanner</span>(System.in)) &#123;<br>            <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) &#123;<br>                System.out.println(<span class="hljs-string">&quot;************************* *&quot;</span>);<br>                System.out.println(<span class="hljs-string">&quot;1.录入学生信息&quot;</span>);<br>                System.out.println(<span class="hljs-string">&quot;2.录入书籍信息&quot;</span>);<br>                System.out.println(<span class="hljs-string">&quot;输入你想要执行的操作（输入其他任意数字退出）：&quot;</span>);<br>                <span class="hljs-type">int</span> input;<br>                <span class="hljs-keyword">try</span> &#123;<br>                    input = scanner.nextInt();<br>                &#125;<span class="hljs-keyword">catch</span>(Exception e)&#123;<br>                    <span class="hljs-keyword">return</span>;<br>                &#125;<br>                <span class="hljs-keyword">switch</span>(input)&#123;<br>                    <span class="hljs-keyword">case</span> <span class="hljs-number">1</span>:<br>                        <span class="hljs-keyword">break</span>;<br>                    <span class="hljs-keyword">case</span> <span class="hljs-number">2</span>:<br>                        <span class="hljs-keyword">break</span>;<br>                    <span class="hljs-keyword">default</span>:<br>                        <span class="hljs-keyword">return</span>;<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br><br><br></code></pre></td></tr></table></figure>
+
+<p><img src="/image/22.06.27/image_QCS_R6b8wJ.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="代码整理一"><a href="#代码整理一" class="headerlink" title="代码整理一"></a>代码整理一</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//Main</span><br><span class="hljs-keyword">package</span> book.manage;<br><br><br><span class="hljs-keyword">import</span> book.manage.entity.Student;<br><span class="hljs-keyword">import</span> book.manage.sql.SqlUtil;<br><br><span class="hljs-keyword">import</span> java.io.IOException;<br><span class="hljs-keyword">import</span> java.util.Scanner;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Main</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> IOException &#123;<br>        <span class="hljs-keyword">try</span> (<span class="hljs-type">Scanner</span> <span class="hljs-variable">scanner</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Scanner</span>(System.in)) &#123;<br>            <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) &#123;<br>                System.out.println(<span class="hljs-string">&quot;************************* *&quot;</span>);<br>                System.out.println(<span class="hljs-string">&quot;1.录入学生信息&quot;</span>);<br>                System.out.println(<span class="hljs-string">&quot;2.录入书籍信息&quot;</span>);<br>                System.out.println(<span class="hljs-string">&quot;输入你想要执行的操作（输入其他任意数字退出）：&quot;</span>);<br>                <span class="hljs-type">int</span> input;<br>                <span class="hljs-keyword">try</span> &#123;<br>                    input = scanner.nextInt();<br>                &#125;<span class="hljs-keyword">catch</span>(Exception e)&#123;<br>                    <span class="hljs-keyword">return</span>;<br>                &#125;<br>                <span class="hljs-comment">//清理换行符</span><br>                scanner.nextLine();<br>                <span class="hljs-keyword">switch</span>(input)&#123;<br>                    <span class="hljs-keyword">case</span> <span class="hljs-number">1</span>:<br>                        addStudent(scanner);<br>                        <span class="hljs-keyword">break</span>;<br>                    <span class="hljs-keyword">case</span> <span class="hljs-number">2</span>:<br>                        <span class="hljs-keyword">break</span>;<br>                    <span class="hljs-keyword">default</span>:<br>                        <span class="hljs-keyword">return</span>;<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">addStudent</span><span class="hljs-params">(Scanner scanner)</span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;请输入学生名字：&quot;</span>);<br>        <span class="hljs-type">String</span> <span class="hljs-variable">name</span> <span class="hljs-operator">=</span> scanner.nextLine();<br>        System.out.println(<span class="hljs-string">&quot;请输入学生的性别（男/女）：&quot;</span>);<br>        <span class="hljs-type">String</span> <span class="hljs-variable">sex</span> <span class="hljs-operator">=</span> scanner.nextLine();<br>        System.out.println(<span class="hljs-string">&quot;请输入学生的年级：&quot;</span>);<br>        <span class="hljs-type">String</span> <span class="hljs-variable">grade</span> <span class="hljs-operator">=</span> scanner.nextLine();<br>        <span class="hljs-type">int</span> <span class="hljs-variable">g</span> <span class="hljs-operator">=</span> Integer.parseInt(grade);<br><br>        <span class="hljs-comment">//创建学生对象</span><br>        <span class="hljs-type">Student</span> <span class="hljs-variable">student</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Student</span>(name,sex,g);<br>        SqlUtil.doSqlWork(mapper -&gt; &#123;<br>            <span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> mapper.addStudent(student);<br>            <span class="hljs-keyword">if</span>(i&gt;<span class="hljs-number">0</span>)&#123;<br>                System.out.println(<span class="hljs-string">&quot;录入成功！&quot;</span>);<br>            &#125;<span class="hljs-keyword">else</span>&#123;<br>                System.out.println(<span class="hljs-string">&quot;录入失败，请重试！&quot;</span>);<br>            &#125;<br>        &#125;);<br>    &#125;<br><br>&#125;<br><br><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//SqlUtil</span><br><span class="hljs-keyword">package</span> book.manage.sql;<br><br><span class="hljs-keyword">import</span> book.manage.mapper.BookMapper;<br><span class="hljs-keyword">import</span> org.apache.ibatis.io.Resources;<br><span class="hljs-keyword">import</span> org.apache.ibatis.session.SqlSession;<br><span class="hljs-keyword">import</span> org.apache.ibatis.session.SqlSessionFactory;<br><span class="hljs-keyword">import</span> org.apache.ibatis.session.SqlSessionFactoryBuilder;<br><br><span class="hljs-keyword">import</span> java.io.IOException;<br><span class="hljs-keyword">import</span> java.util.function.Consumer;<br><br><span class="hljs-comment">/*** </span><br><span class="hljs-comment"> <span class="hljs-doctag">@author</span> Wahoyu* </span><br><span class="hljs-comment">/</span><br><span class="hljs-comment">public class SqlUtil &#123;</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">    private SqlUtil()&#123;&#125;</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">    private static SqlSessionFactory factory;</span><br><span class="hljs-comment">    static &#123;</span><br><span class="hljs-comment">        try &#123;</span><br><span class="hljs-comment">            factory = new SqlSessionFactoryBuilder().build(Resources.getResourceAsReader(&quot;mybatis-config.xml&quot;));</span><br><span class="hljs-comment">        &#125; catch (IOException e) &#123;</span><br><span class="hljs-comment">            e.printStackTrace();</span><br><span class="hljs-comment">        &#125;</span><br><span class="hljs-comment">    &#125;</span><br><span class="hljs-comment">    public static void doSqlWork(Consumer&lt;BookMapper&gt; consumer)&#123;</span><br><span class="hljs-comment">        try(SqlSession sqlSession = factory.openSession(true))&#123;</span><br><span class="hljs-comment">            BookMapper bookMapper = sqlSession.getMapper(BookMapper.class);</span><br><span class="hljs-comment">            consumer.accept(bookMapper);</span><br><span class="hljs-comment">        &#125;</span><br><span class="hljs-comment">    &#125;</span><br><span class="hljs-comment">&#125;</span><br><span class="hljs-comment"></span><br><span class="hljs-comment"></span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--Mybatisconfig.xml--&gt;</span><br><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span> ?&gt;</span><br><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">configuration</span></span><br><span class="hljs-meta">        <span class="hljs-keyword">PUBLIC</span> <span class="hljs-string">&quot;-//mybatis.org//DTD Config 3.0//EN&quot;</span></span><br><span class="hljs-meta">        <span class="hljs-string">&quot;http://mybatis.org/dtd/mybatis-3-config.dtd&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">configuration</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">environments</span> <span class="hljs-attr">default</span>=<span class="hljs-string">&quot;development&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">environment</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;development&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">transactionManager</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;JDBC&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">dataSource</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;POOLED&quot;</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;driver&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;com.mysql.cj.jdbc.Driver&quot;</span>/&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;url&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;jdbc:mysql://localhost:3306/book_manage&quot;</span>/&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;username&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;root&quot;</span>/&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;password&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;123456&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">dataSource</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">environment</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">environments</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">mappers</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">mapper</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;book.manage.mapper.BookMapper&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">mappers</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">configuration</span>&gt;</span><br><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//mapper.java</span><br><span class="hljs-keyword">package</span> book.manage.mapper;<br><br><span class="hljs-keyword">import</span> book.manage.entity.Book;<br><span class="hljs-keyword">import</span> book.manage.entity.Student;<br><span class="hljs-keyword">import</span> org.apache.ibatis.annotations.Insert;<br><span class="hljs-keyword">import</span> org.apache.ibatis.annotations.Select;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">BookMapper</span> &#123;<br><br>    <span class="hljs-meta">@Insert(&quot;insert into student(name,sex,grade) value(#&#123;name&#125;,#&#123;sex&#125;,#&#123;grade&#125;)&quot;)</span><br>    <span class="hljs-type">int</span> <span class="hljs-title function_">addStudent</span><span class="hljs-params">(Student student)</span>;<br><br>    <span class="hljs-meta">@Insert(&quot;insert into book(title,`desc`,price) value(#&#123;title&#125;,#&#123;desc&#125;,#&#123;price&#125;)&quot;)</span><br>    <span class="hljs-type">int</span> <span class="hljs-title function_">addBook</span><span class="hljs-params">(Book book)</span>;<br><br>    <span class="hljs-meta">@Select(&quot;select * from student where sid = #&#123;sid&#125;&quot;)</span><br>    Student <span class="hljs-title function_">getStudentBySid</span><span class="hljs-params">(<span class="hljs-type">int</span> sid)</span>;<br><br>    <span class="hljs-meta">@Select(&quot;select*  from book where bid = #&#123;bid&#125;&quot;)</span><br>    Book <span class="hljs-title function_">getBookByBid</span><span class="hljs-params">(<span class="hljs-type">int</span> bid)</span>;<br><br>&#125;<br><br><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//Student</span><br><span class="hljs-keyword">package</span> book.manage.entity;<br><br><span class="hljs-keyword">import</span> lombok.Data;<br><br><span class="hljs-meta">@Data</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Student</span> &#123;<br>    <span class="hljs-type">int</span> sid;<br>    <span class="hljs-keyword">final</span> String name;<br>    <span class="hljs-keyword">final</span> String sex;<br>    <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> grade;<br>&#125;<br><br><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//book</span><br><span class="hljs-keyword">package</span> book.manage.entity;<br><br><span class="hljs-keyword">import</span> lombok.Data;<br><br><span class="hljs-meta">@Data</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Book</span> &#123;<br>    <span class="hljs-type">int</span> bid;<br>    <span class="hljs-keyword">final</span> String title;<br>    <span class="hljs-keyword">final</span> String desc;<br>    <span class="hljs-keyword">final</span> <span class="hljs-type">double</span> price;<br>&#125;<br><br><br></code></pre></td></tr></table></figure>
+
+<p><img src="/image/22.06.27/image_5RXbHaH6rc.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="开始配置日志系统"><a href="#开始配置日志系统" class="headerlink" title="开始配置日志系统"></a>开始配置日志系统</h2><ul>
+<li>[x] 敏感操作进行日志输出，输出到文件</li>
+</ul>
+<h3 id="配置（日志配置）文件"><a href="#配置（日志配置）文件" class="headerlink" title="配置（日志配置）文件"></a>配置（日志配置）文件</h3><p>logging.properties</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs .properties">#设置输出级别<br>#不用控制台打印，用文件打印<br>handlers= java.util.logging.FileHandler<br>.level= All<br><br>#命名输出文件<br>java.util.logging.FileHandler=console.log<br>#设置输出格式为默认<br>java.util.logging.FileHandler.formatter=java.util.logging.SimpleFormatter<br><br><br></code></pre></td></tr></table></figure>
+
+<h3 id="主函数配置日志"><a href="#主函数配置日志" class="headerlink" title="主函数配置日志"></a>主函数配置日志</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//日志配置</span><br><span class="hljs-type">LogManager</span> <span class="hljs-variable">manager</span> <span class="hljs-operator">=</span> LogManager.getLogManager();<br>manager.readConfiguration(Resources.getResourceAsStream(<span class="hljs-string">&quot;logging.properties&quot;</span>));<br></code></pre></td></tr></table></figure>
+
+<p>报错1：不能使用log.info（）；</p>
+<p><img src="/image/22.06.27/image_cC-3sXLxOu.png" srcset="/img/loading.gif" lazyload></p>
+<p>解决：在Main类上添加注解@Log</p>
+<p><img src="/image/22.06.27/image_NdME8uxuDf.png" srcset="/img/loading.gif" lazyload></p>
+<p>报错2：(.level)附近的日志配置文件书写格式错误</p>
+<p><img src="/image/22.06.27/image_7WRS2s4tKa.png" srcset="/img/loading.gif" lazyload></p>
+<p>解决：ALL应该全部大写</p>
+<p>报错3：输出到文件中的日志都是标签格式的</p>
+<p><img src="/image/22.06.27/image_oCwzP3kYPV.png" srcset="/img/loading.gif" lazyload></p>
+<p>解决：单词打错，应该是handler,影响了日志文件格式的定义。</p>
+<h3 id="让日志追加打印"><a href="#让日志追加打印" class="headerlink" title="让日志追加打印"></a>让日志追加打印</h3><p>配置logging.properties</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs .properties">#设置输出级别<br>#不用控制台打印，用文件打印<br>handlers= java.util.logging.FileHandler<br>.level= INFO<br><br>#命名输出文件<br>java.util.logging.FileHandler.pattern=console.log<br>#设置输出格式为默认<br>java.util.logging.FileHandler.formatter=java.util.logging.SimpleFormatter<br>#追加打印<br>java.util.logging.FileHandler.append=true<br><br></code></pre></td></tr></table></figure>
+
+<p><img src="/image/22.06.27/image_jzDx-gKICf.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="编写学生借书操作"><a href="#编写学生借书操作" class="headerlink" title="编写学生借书操作"></a>编写学生借书操作</h2><p>1.编写菜单和提示输入界面</p>
+<p><img src="/image/22.06.27/image_ub-6kqqtCC.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/image/22.06.27/image_m3d-OWOWgk.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/image/22.06.27/image_p8v0162hIq.png" srcset="/img/loading.gif" lazyload></p>
+<p>2.分析数据库表的设计</p>
+<p>插入bid和sid即可</p>
+<p>3.编写mapper</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Insert(&quot;isnert into borrow(sid,bid) values(#&#123;sid&#125;,#&#123;bid&#125;)&quot;)</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">addBorrow</span><span class="hljs-params">(<span class="hljs-type">int</span> sid,<span class="hljs-type">int</span> bid)</span>;<br></code></pre></td></tr></table></figure>
+
+<p>4.编写Main中对应创建对象的函数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//借书</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">addBorrow</span><span class="hljs-params">(Scanner scanner)</span>&#123;<br>        System.out.print(<span class="hljs-string">&quot;请输入书的编号:&quot;</span>);<br>        <span class="hljs-type">String</span> <span class="hljs-variable">a</span> <span class="hljs-operator">=</span> scanner.nextLine();<br>        <span class="hljs-type">int</span> <span class="hljs-variable">bid</span> <span class="hljs-operator">=</span> Integer.parseInt(a);<br>        System.out.print(<span class="hljs-string">&quot;请输入学号:&quot;</span>);<br>        <span class="hljs-type">String</span> <span class="hljs-variable">b</span> <span class="hljs-operator">=</span> scanner.nextLine();<br>        <span class="hljs-type">int</span> <span class="hljs-variable">sid</span> <span class="hljs-operator">=</span> Integer.parseInt(b);<br><br>        SqlUtil.doSqlWork(mapper -&gt; &#123;<br>            <span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> mapper.addBorrow(sid,bid);<br>            <span class="hljs-keyword">if</span>(i&gt;<span class="hljs-number">0</span>)&#123;<br>                System.out.println(<span class="hljs-string">&quot;录入成功！&quot;</span>);<br>                log.info(<span class="hljs-string">&quot;添加一条借阅信息&quot;</span>);<br>            &#125;<br>            <span class="hljs-keyword">else</span>&#123;<br>                System.out.println(<span class="hljs-string">&quot;录入失败，请重试！&quot;</span>);<br>            &#125;<br>        &#125;);<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">case</span> <span class="hljs-number">3</span>:<br>    <span class="hljs-keyword">try</span>&#123;addBorrow(scanner);&#125;<br>    <span class="hljs-keyword">catch</span>(Exception e)&#123;<br>        System.out.println(<span class="hljs-string">&quot;录入失败！（可能录入重复）&quot;</span>);<br>        <span class="hljs-keyword">break</span>;&#125;<br></code></pre></td></tr></table></figure>
+
+<p>5.完善main</p>
+<p>提问：为什么借阅信息不需要实体类？</p>
+<p>解答：后面进行查询就需要实体类了，查询的时候要把数据库中的东西拿出来，放在实体类中，通过实体类进行表达。</p>
+<p>报错：sid没有找到，mapper中输入两个数，导致sid和bid没有对应上</p>
+<p><img src="/image/22.06.27/image_2jKuS2refE.png" srcset="/img/loading.gif" lazyload></p>
+<p>解决：加注解表示哪个对用的是哪个</p>
+<p><img src="/image/22.06.27/image_X4fjPCTaV9.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="代码整理二"><a href="#代码整理二" class="headerlink" title="代码整理二"></a>代码整理二</h2><p>Main</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> book.manage;<br><br><br><span class="hljs-keyword">import</span> book.manage.entity.Book;<br><span class="hljs-keyword">import</span> book.manage.entity.Student;<br><span class="hljs-keyword">import</span> book.manage.sql.SqlUtil;<br><span class="hljs-keyword">import</span> lombok.extern.java.Log;<br><span class="hljs-keyword">import</span> org.apache.ibatis.annotations.Insert;<br><span class="hljs-keyword">import</span> org.apache.ibatis.io.Resources;<br><br><span class="hljs-keyword">import</span> java.io.IOException;<br><span class="hljs-keyword">import</span> java.util.Scanner;<br><span class="hljs-keyword">import</span> java.util.logging.LogManager;<br><br><span class="hljs-meta">@Log</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Main</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> IOException &#123;<br>        <span class="hljs-keyword">try</span> (<span class="hljs-type">Scanner</span> <span class="hljs-variable">scanner</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Scanner</span>(System.in)) &#123;<br>            <span class="hljs-comment">//日志配置</span><br>            <span class="hljs-type">LogManager</span> <span class="hljs-variable">manager</span> <span class="hljs-operator">=</span> LogManager.getLogManager();<br>            manager.readConfiguration(Resources.getResourceAsStream(<span class="hljs-string">&quot;logging.properties&quot;</span>));<br><br>            <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) &#123;<br>                System.out.println(<span class="hljs-string">&quot;===============================================&quot;</span>);<br>                System.out.println(<span class="hljs-string">&quot;1.录入学生信息&quot;</span>);<br>                System.out.println(<span class="hljs-string">&quot;2.录入书籍信息&quot;</span>);<br>                System.out.println(<span class="hljs-string">&quot;3.添加借阅信息&quot;</span>);<br>                System.out.print(<span class="hljs-string">&quot;输入你想要执行的操作（输入其他任意数字退出）：&quot;</span>);<br>                <span class="hljs-type">int</span> input;<br>                <span class="hljs-keyword">try</span> &#123;<br>                    input = scanner.nextInt();<br>                &#125;<span class="hljs-keyword">catch</span>(Exception e)&#123;<br>                    <span class="hljs-keyword">return</span>;<br>                &#125;<br>                <span class="hljs-comment">//清理换行符</span><br>                scanner.nextLine();<br>                <span class="hljs-keyword">switch</span>(input)&#123;<br>                    <span class="hljs-keyword">case</span> <span class="hljs-number">1</span>:<br>                        addStudent(scanner);<br>                        <span class="hljs-keyword">break</span>;<br>                    <span class="hljs-keyword">case</span> <span class="hljs-number">2</span>:<br>                        addBook(scanner);<br>                        <span class="hljs-keyword">break</span>;<br>                    <span class="hljs-keyword">case</span> <span class="hljs-number">3</span>:<br>                        <span class="hljs-keyword">try</span>&#123;addBorrow(scanner);&#125;<br>                        <span class="hljs-keyword">catch</span>(Exception e)&#123;<br>                            System.out.println(<span class="hljs-string">&quot;录入失败！（可能录入重复）&quot;</span>);<br>                            <span class="hljs-keyword">break</span>;&#125;<br>                    <span class="hljs-keyword">default</span>:<br>                        <span class="hljs-keyword">return</span>;<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-comment">//借书</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">addBorrow</span><span class="hljs-params">(Scanner scanner)</span>&#123;<br>        System.out.print(<span class="hljs-string">&quot;请输入书的编号:&quot;</span>);<br>        <span class="hljs-type">String</span> <span class="hljs-variable">a</span> <span class="hljs-operator">=</span> scanner.nextLine();<br>        <span class="hljs-type">int</span> <span class="hljs-variable">bid</span> <span class="hljs-operator">=</span> Integer.parseInt(a);<br>        System.out.print(<span class="hljs-string">&quot;请输入学号:&quot;</span>);<br>        <span class="hljs-type">String</span> <span class="hljs-variable">b</span> <span class="hljs-operator">=</span> scanner.nextLine();<br>        <span class="hljs-type">int</span> <span class="hljs-variable">sid</span> <span class="hljs-operator">=</span> Integer.parseInt(b);<br><br>        SqlUtil.doSqlWork(mapper -&gt; &#123;<br>            <span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> mapper.addBorrow(sid,bid);<br>            <span class="hljs-keyword">if</span>(i&gt;<span class="hljs-number">0</span>)&#123;<br>                System.out.println(<span class="hljs-string">&quot;录入成功！&quot;</span>);<br>                log.info(<span class="hljs-string">&quot;添加一条借阅信息&quot;</span>);<br>            &#125;<br>            <span class="hljs-keyword">else</span>&#123;<br>                System.out.println(<span class="hljs-string">&quot;录入失败，请重试！&quot;</span>);<br>            &#125;<br>        &#125;);<br>    &#125;<br><br>    <span class="hljs-comment">//插入学生</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">addStudent</span><span class="hljs-params">(Scanner scanner)</span>&#123;<br>        System.out.print(<span class="hljs-string">&quot;请输入学生名字：&quot;</span>);<br>        <span class="hljs-type">String</span> <span class="hljs-variable">name</span> <span class="hljs-operator">=</span> scanner.nextLine();<br>        System.out.print(<span class="hljs-string">&quot;请输入学生的性别（男/女）：&quot;</span>);<br>        <span class="hljs-type">String</span> <span class="hljs-variable">sex</span> <span class="hljs-operator">=</span> scanner.nextLine();<br>        System.out.print(<span class="hljs-string">&quot;请输入学生的年级：&quot;</span>);<br>        <span class="hljs-type">String</span> <span class="hljs-variable">grade</span> <span class="hljs-operator">=</span> scanner.nextLine();<br>        <span class="hljs-type">int</span> <span class="hljs-variable">g</span> <span class="hljs-operator">=</span> Integer.parseInt(grade);<br><br>        <span class="hljs-comment">//创建学生对象</span><br>        <span class="hljs-type">Student</span> <span class="hljs-variable">student</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Student</span>(name,sex,g);<br>        SqlUtil.doSqlWork(mapper -&gt; &#123;<br>            <span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> mapper.addStudent(student);<br>            <span class="hljs-keyword">if</span>(i&gt;<span class="hljs-number">0</span>)&#123;<br>                System.out.println(<span class="hljs-string">&quot;录入成功！&quot;</span>);<br>                log.info(<span class="hljs-string">&quot;新添加一条学生信息&quot;</span>+student);<br>            &#125;<span class="hljs-keyword">else</span>&#123;<br>                System.out.println(<span class="hljs-string">&quot;录入失败，请重试！&quot;</span>);<br>            &#125;<br>        &#125;);<br>    &#125;<br>    <span class="hljs-comment">//插入书</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">addBook</span><span class="hljs-params">(Scanner scanner)</span>&#123;<br>        System.out.print(<span class="hljs-string">&quot;请输入书名：&quot;</span>);<br>        <span class="hljs-type">String</span> <span class="hljs-variable">title</span> <span class="hljs-operator">=</span> scanner.nextLine();<br>        System.out.print(<span class="hljs-string">&quot;请输入书籍简介：&quot;</span>);<br>        <span class="hljs-type">String</span> <span class="hljs-variable">desc</span> <span class="hljs-operator">=</span> scanner.nextLine();<br>        System.out.print(<span class="hljs-string">&quot;请输入书的价格&quot;</span>);<br>        <span class="hljs-type">String</span> <span class="hljs-variable">price</span> <span class="hljs-operator">=</span> scanner.nextLine();<br>        <span class="hljs-type">double</span> p= Double.parseDouble((price));<br><br>        <span class="hljs-comment">//创建书籍对象</span><br>        <span class="hljs-type">Book</span> <span class="hljs-variable">book</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Book</span>(title,desc,p);<br><br>        <span class="hljs-comment">//匿名内部类其实就是在new的时候，直接对接口或是抽象类的实现</span><br>        <span class="hljs-comment">//lambda表达式其实就是我们接口匿名实现的简化</span><br>        <span class="hljs-comment">//(传入doSqlWork方法的参数)-&gt;&#123;实现接口方法的方法体&#125;</span><br>        SqlUtil.doSqlWork(mapper -&gt; &#123;<br>            <span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> mapper.addBook(book);<br>            <span class="hljs-keyword">if</span>(i&gt;<span class="hljs-number">0</span>)&#123;<br>                System.out.println(<span class="hljs-string">&quot;录入成功！&quot;</span>);<br>                log.info(<span class="hljs-string">&quot;新添加了一条书籍信息&quot;</span>+book);<br>            &#125;<span class="hljs-keyword">else</span>&#123;<br>                System.out.println(<span class="hljs-string">&quot;录入失败，请重试！&quot;</span>);<br>            &#125;<br>        &#125;);<br>    &#125;<br><br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>SqlUtil</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> book.manage.sql;<br><br><span class="hljs-keyword">import</span> book.manage.mapper.BookMapper;<br><span class="hljs-keyword">import</span> org.apache.ibatis.io.Resources;<br><span class="hljs-keyword">import</span> org.apache.ibatis.session.SqlSession;<br><span class="hljs-keyword">import</span> org.apache.ibatis.session.SqlSessionFactory;<br><span class="hljs-keyword">import</span> org.apache.ibatis.session.SqlSessionFactoryBuilder;<br><br><span class="hljs-keyword">import</span> java.io.IOException;<br><span class="hljs-keyword">import</span> java.util.function.Consumer;<br><br><span class="hljs-comment">/*** </span><br><span class="hljs-comment"> <span class="hljs-doctag">@author</span> Wahoyu* </span><br><span class="hljs-comment">/</span><br><span class="hljs-comment">public class SqlUtil &#123;</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">    private SqlUtil()&#123;&#125;</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">    private static SqlSessionFactory factory;</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">    //静态代码块只执行一次，创建一次factory</span><br><span class="hljs-comment">    static &#123;</span><br><span class="hljs-comment">        try &#123;</span><br><span class="hljs-comment">            factory = new SqlSessionFactoryBuilder().build(Resources.getResourceAsReader(&quot;mybatis-config.xml&quot;));</span><br><span class="hljs-comment">        &#125;</span><br><span class="hljs-comment">        catch (IOException e) &#123;</span><br><span class="hljs-comment">            e.printStackTrace();</span><br><span class="hljs-comment">        &#125;</span><br><span class="hljs-comment">    &#125;</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">    //Consumer是lambda表达式中的一个接口</span><br><span class="hljs-comment">    public static void doSqlWork(Consumer&lt;BookMapper&gt; consumer)&#123;</span><br><span class="hljs-comment">        try(SqlSession sqlSession = factory.openSession(true))&#123;</span><br><span class="hljs-comment">            BookMapper bookMapper = sqlSession.getMapper(BookMapper.class);</span><br><span class="hljs-comment">            consumer.accept(bookMapper);</span><br><span class="hljs-comment">        &#125;</span><br><span class="hljs-comment">    &#125;</span><br><span class="hljs-comment">&#125;</span><br><span class="hljs-comment"></span><br></code></pre></td></tr></table></figure>
+
+<p>mapper.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> book.manage.mapper;<br><br><span class="hljs-keyword">import</span> book.manage.entity.Book;<br><span class="hljs-keyword">import</span> book.manage.entity.Student;<br><span class="hljs-keyword">import</span> org.apache.ibatis.annotations.Insert;<br><span class="hljs-keyword">import</span> org.apache.ibatis.annotations.Param;<br><span class="hljs-keyword">import</span> org.apache.ibatis.annotations.Select;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">BookMapper</span> &#123;<br><br>    <span class="hljs-meta">@Insert(&quot;insert into student(name,sex,grade) value(#&#123;name&#125;,#&#123;sex&#125;,#&#123;grade&#125;)&quot;)</span><br>    <span class="hljs-type">int</span> <span class="hljs-title function_">addStudent</span><span class="hljs-params">(Student student)</span>;<br><br>    <span class="hljs-meta">@Insert(&quot;insert into book(title,`desc`,price) value(#&#123;title&#125;,#&#123;desc&#125;,#&#123;price&#125;)&quot;)</span><br>    <span class="hljs-type">int</span> <span class="hljs-title function_">addBook</span><span class="hljs-params">(Book book)</span>;<br><br>    <span class="hljs-meta">@Select(&quot;select*  from student where sid = #&#123;sid&#125;&quot;)</span><br>    Student <span class="hljs-title function_">getStudentBySid</span><span class="hljs-params">(<span class="hljs-type">int</span> sid)</span>;<br><br>    <span class="hljs-meta">@Select(&quot;select*  from book where bid = #&#123;bid&#125;&quot;)</span><br>    Book <span class="hljs-title function_">getBookByBid</span><span class="hljs-params">(<span class="hljs-type">int</span> bid)</span>;<br><br>    <span class="hljs-meta">@Insert(&quot;insert into borrow(sid,bid) values(#&#123;sid&#125;,#&#123;bid&#125;)&quot;)</span><br>    <span class="hljs-type">int</span> <span class="hljs-title function_">addBorrow</span><span class="hljs-params">(<span class="hljs-meta">@Param(&quot;sid&quot;)</span><span class="hljs-type">int</span> sid,<span class="hljs-meta">@Param(&quot;bid&quot;)</span><span class="hljs-type">int</span> bid)</span>;<br><br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>mybaits.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span> ?&gt;</span><br><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">configuration</span></span><br><span class="hljs-meta">        <span class="hljs-keyword">PUBLIC</span> <span class="hljs-string">&quot;-//mybatis.org//DTD Config 3.0//EN&quot;</span></span><br><span class="hljs-meta">        <span class="hljs-string">&quot;http://mybatis.org/dtd/mybatis-3-config.dtd&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">configuration</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">settings</span>&gt;</span><br>        <span class="hljs-comment">&lt;!--配置日志管理系统--&gt;</span><br>        <span class="hljs-comment">&lt;!--        &lt;setting name=&quot;logImpl&quot; value=&quot;STDOUT_LOGGING&quot;/&gt;--&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">setting</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;logImpl&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;NO_LOGGING&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">settings</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">environments</span> <span class="hljs-attr">default</span>=<span class="hljs-string">&quot;development&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">environment</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;development&quot;</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">transactionManager</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;JDBC&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">dataSource</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;POOLED&quot;</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;driver&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;com.mysql.cj.jdbc.Driver&quot;</span>/&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;url&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;jdbc:mysql://localhost:3306/book_manage&quot;</span>/&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;username&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;root&quot;</span>/&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;password&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;123456&quot;</span>/&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">dataSource</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">environment</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">environments</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">mappers</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">mapper</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;book.manage.mapper.BookMapper&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">mappers</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">configuration</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>logging.properties</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs .properties">#设置输出级别<br>#不用控制台打印，用文件打印<br>handlers= java.util.logging.FileHandler<br>.level= INFO<br><br>#命名输出文件<br>java.util.logging.FileHandler.pattern=console.log<br>#设置输出格式为默认<br>java.util.logging.FileHandler.formatter=java.util.logging.SimpleFormatter<br>#追加打印<br>java.util.logging.FileHandler.append=true<br><br></code></pre></td></tr></table></figure>
+
+<p>Student</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> book.manage.entity;<br><br><span class="hljs-keyword">import</span> lombok.Data;<br><br><span class="hljs-meta">@Data</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Student</span> &#123;<br>    <span class="hljs-type">int</span> sid;<br>    <span class="hljs-keyword">final</span> String name;<br>    <span class="hljs-keyword">final</span> String sex;<br>    <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> grade;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>Book</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> book.manage.entity;<br><br><span class="hljs-keyword">import</span> lombok.Data;<br><br><span class="hljs-meta">@Data</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Book</span> &#123;<br>    <span class="hljs-type">int</span> bid;<br>    <span class="hljs-keyword">final</span> String title;<br>    <span class="hljs-keyword">final</span> String desc;<br>    <span class="hljs-keyword">final</span> <span class="hljs-type">double</span> price;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<h2 id="查询全部借阅信息"><a href="#查询全部借阅信息" class="headerlink" title="查询全部借阅信息"></a>查询全部借阅信息</h2><p>查询操作就需要创建实体类，封装成一个类，不然没办法查。</p>
+<p>在接口中定义&lt;List&gt;实体类</p>
+<p>前面的插入数据的时候可以用int 进行创建对象</p>
+<h3 id="封装一个查询对象"><a href="#封装一个查询对象" class="headerlink" title="封装一个查询对象"></a>封装一个查询对象</h3><p>borrow实体类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> book.manage.entity;<br><br><span class="hljs-meta">@Data</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Borrow</span> &#123;<br>    <span class="hljs-type">int</span> id;<br>    <br>    <span class="hljs-comment">//做个映射</span><br>    Student student;<br>    Book book;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="使用TestMain进行测试"><a href="#使用TestMain进行测试" class="headerlink" title="使用TestMain进行测试"></a>使用TestMain进行测试</h3><p>好处：</p>
+<p>①不会真正对数据库进行操作</p>
+<p>②不会真正对日志进行改写</p>
+<p>TestMain.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.test;<br><br><span class="hljs-keyword">import</span> book.manage.sql.SqlUtil;<br><span class="hljs-keyword">import</span> org.junit.jupiter.api.Test;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MainTest</span> &#123;<br><br>    <span class="hljs-meta">@Test</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">test1</span><span class="hljs-params">()</span>&#123;<br>        SqlUtil.doSqlWork(mapper -&gt; &#123;<br>            mapper.getBorrowList().forEach(System.out::println);<br>        &#125;);<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>报错1：“sex”无法与“女”进行对应</p>
+<p>解决方法：①给book和student都加上<code>@NoArgsConstructor</code>,去掉成员属性中的final,加上一个不带主键的构造方法。</p>
+<p>②给borrow加上<code>@Data</code></p>
+<p><img src="/image/22.06.27/image_mPBmimEb_3.png" srcset="/img/loading.gif" lazyload></p>
+<p>测试结束后给主方法添加</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">showBorrow</span><span class="hljs-params">(Scanner scanner)</span>&#123;<br>        <span class="hljs-comment">//不输入直接显示全部</span><br>        SqlUtil.doSqlWork(mapper -&gt;&#123;<br>            mapper.getBorrowList().forEach(borrow -&gt; &#123;<br>                    System.out.println(borrow.getStudent().getName()+<span class="hljs-string">&quot; -&gt; &quot;</span>+borrow.getBook().getTitle());<br>            &#125;);<br>        &#125;);<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="查询全部的书籍和学生信息"><a href="#查询全部的书籍和学生信息" class="headerlink" title="查询全部的书籍和学生信息"></a>查询全部的书籍和学生信息</h2><h3 id="编写mapper"><a href="#编写mapper" class="headerlink" title="编写mapper"></a>编写mapper</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Select(&quot;select * from student&quot;)</span><br>    List&lt;Student&gt; <span class="hljs-title function_">getStudentList</span><span class="hljs-params">()</span>;<br><br>    <span class="hljs-meta">@Select(&quot;select*  from book&quot;)</span><br>    List&lt;Book&gt; <span class="hljs-title function_">getBookList</span><span class="hljs-params">()</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="在TestMain中测试"><a href="#在TestMain中测试" class="headerlink" title="在TestMain中测试"></a>在TestMain中测试</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//三重借阅</span><br><span class="hljs-meta">@Test</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">test1</span><span class="hljs-params">()</span>&#123;<br>        SqlUtil.doSqlWork(mapper -&gt; &#123;<br>            mapper.getBorrowList().forEach(System.out::println);<br>        &#125;);<br>    &#125;<br>        <span class="hljs-meta">@Test</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">test2</span><span class="hljs-params">()</span>&#123;<br>        SqlUtil.doSqlWork(mapper -&gt; &#123;<br>            mapper.getStudentList().forEach(System.out::println);<br>        &#125;);<br>    &#125;<br>        <span class="hljs-meta">@Test</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">test3</span><span class="hljs-params">()</span>&#123;<br>        SqlUtil.doSqlWork(mapper -&gt; &#123;<br>            mapper.getBookList().forEach(System.out::println);<br>        &#125;);<br>    &#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>报错：在执行插入借阅关系后总是会默认打印出所有的借阅关系？</p>
+<p>原因：因为在case3后面并没有执行finally{break;}，在没有case4的时候，case3会自动结束，但是如果有了case 4，case 3就不会结束，自动运行case4。</p>
+<p>疑问：为什么在<code>查看所有借阅关系</code>上面要明确对应出每一个人和书籍</p>
+<p>原因：因为借阅关系存入的时候存的是学号，但是显示出来的是姓名和书名。所以我们要通过号来查到对象，然后通过对象获取到名字。</p>
+<h2 id="项目打包"><a href="#项目打包" class="headerlink" title="项目打包"></a>项目打包</h2><p>打包成jar文件</p>
+<p>在Maven中配置打包插件 （plugin放在build-plugins标签中）</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">build</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">plugins</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">plugin</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>maven-assembly-plugin<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.1.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">configuration</span>&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">descriptorRefs</span>&gt;</span><br>                        <span class="hljs-tag">&lt;<span class="hljs-name">descriptorRef</span>&gt;</span>jar-with-dependencies<span class="hljs-tag">&lt;/<span class="hljs-name">descriptorRef</span>&gt;</span><br>                    <span class="hljs-tag">&lt;/<span class="hljs-name">descriptorRefs</span>&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">archive</span>&gt;</span><br>                        <span class="hljs-tag">&lt;<span class="hljs-name">manifest</span>&gt;</span><br>                            <span class="hljs-tag">&lt;<span class="hljs-name">addClasspath</span>&gt;</span>true<span class="hljs-tag">&lt;/<span class="hljs-name">addClasspath</span>&gt;</span><br>                            <span class="hljs-tag">&lt;<span class="hljs-name">mainClass</span>&gt;</span>com.test.Main<span class="hljs-tag">&lt;/<span class="hljs-name">mainClass</span>&gt;</span><br>                        <span class="hljs-tag">&lt;/<span class="hljs-name">manifest</span>&gt;</span><br>                    <span class="hljs-tag">&lt;/<span class="hljs-name">archive</span>&gt;</span><br>                <span class="hljs-tag">&lt;/<span class="hljs-name">configuration</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">executions</span>&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">execution</span>&gt;</span><br>                        <span class="hljs-tag">&lt;<span class="hljs-name">id</span>&gt;</span>make-assembly<span class="hljs-tag">&lt;/<span class="hljs-name">id</span>&gt;</span><br>                        <span class="hljs-tag">&lt;<span class="hljs-name">phase</span>&gt;</span>package<span class="hljs-tag">&lt;/<span class="hljs-name">phase</span>&gt;</span><br>                        <span class="hljs-tag">&lt;<span class="hljs-name">goals</span>&gt;</span><br>                            <span class="hljs-tag">&lt;<span class="hljs-name">goal</span>&gt;</span>single<span class="hljs-tag">&lt;/<span class="hljs-name">goal</span>&gt;</span><br>                        <span class="hljs-tag">&lt;/<span class="hljs-name">goals</span>&gt;</span><br>                    <span class="hljs-tag">&lt;/<span class="hljs-name">execution</span>&gt;</span><br>                <span class="hljs-tag">&lt;/<span class="hljs-name">executions</span>&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">plugin</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">plugins</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">build</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>JUnit5的插件也要拿过来，因为版本太新，尚未兼容</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">build</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">plugins</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">plugin</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>maven-surefire-plugin<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>            <span class="hljs-comment">&lt;!-- JUnit 5 requires Surefire version 2.22.0 or higher --&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.22.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">plugin</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">plugins</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">build</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>执行打包package</p>
+<p><img src="/image/22.06.27/image_dB8Y1jCBCV.png" srcset="/img/loading.gif" lazyload></p>
+<p>运行jar文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs .properties">java -jar 拖动文件到此<br></code></pre></td></tr></table></figure>
+
+<p>报错：无法加载主类com.test.Main</p>
+<p>解决：属于路径错误问题。Main前面应该指定正确的路径，比如如果Main文件是<code>package book.manage;</code></p>
+<p>那么路径就应该写<code>book.manege.Main</code></p>
+<p><img src="/image/22.06.27/image_rj1G3P14gB.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/image/22.06.27/image_stLIXM_c1v.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="关于运行jar包的日志文件生成"><a href="#关于运行jar包的日志文件生成" class="headerlink" title="关于运行jar包的日志文件生成"></a>关于运行jar包的日志文件生成</h3><p>windows默认在C：\Users\用户名\</p>
+<p><img src="/image/22.06.27/image_ayDo7ZA37A.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="后续相关优化"><a href="#后续相关优化" class="headerlink" title="后续相关优化"></a>后续相关优化</h2><p>1.改变日志生成位置</p>
+<p>如果想改的话可以改logging.properties文件中的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs .properties">#命名输出文件<br>java.util.logging.FileHandler.pattern=C\\Users\\64570\\Desktop\\console.log<br></code></pre></td></tr></table></figure>
+
+<p>就会默认输出到桌面了。</p>
+<p>2.给书籍价格加上小数点</p>
+<p>原因：是书籍的数据库表格建立的问题，给price加上小数点就OK了</p>
+<p><img src="/image/22.06.27/image_lxMzmRiFMP.png" srcset="/img/loading.gif" lazyload></p>
+
+              
+            </div>
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Java/">#Java</a>
+      
+        <a href="/tags/Mybatis/">#Mybatis</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>基于Mybatis的图书管理系统</div>
+      <div>http://example.com/2022/06/27/基于Mybatis-JUL-Lombok-Maven的图书管理系统（带单元测试）/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Wahoyu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年6月27日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/06/19/%E5%85%B3%E4%BA%8E%E5%8F%8D%E5%B0%84%E4%B8%8E%E6%B3%A8%E8%A7%A3%E7%9A%84%E7%90%86%E8%A7%A3%E4%B8%8E%E6%80%BB%E7%BB%93/" title="关于反射与注解的理解与总结">
+                        <span class="hidden-mobile">关于反射与注解的理解与总结</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.4.16/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"7WuaJQGQGU5GFxMKMtDzWYVI-gzGzoHsz","appKey":"zdCzx5CuURztPQQoi8LuXSWv","path":"window.location.pathname","placeholder":"欢迎评论~~~","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://7wuajqgq.lc-cn-n1-shared.com","emojiCDN":null,"emojiMaps":null,"enableQQ":true},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.0/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script>
+  (function() {
+    var enableLang = CONFIG.code_language.enable && CONFIG.code_language.default;
+    var enableCopy = CONFIG.copy_btn;
+    if (!enableLang && !enableCopy) {
+      return;
+    }
+
+    function getBgClass(ele) {
+      return Fluid.utils.getBackgroundLightness(ele) >= 0 ? 'code-widget-light' : 'code-widget-dark';
+    }
+
+    var copyTmpl = '';
+    copyTmpl += '<div class="code-widget">';
+    copyTmpl += 'LANG';
+    copyTmpl += '</div>';
+    jQuery('.markdown-body pre').each(function() {
+      var $pre = jQuery(this);
+      if ($pre.find('code.mermaid').length > 0) {
+        return;
+      }
+      if ($pre.find('span.line').length > 0) {
+        return;
+      }
+
+      var lang = '';
+
+      if (enableLang) {
+        lang = CONFIG.code_language.default;
+        if ($pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2 && $pre.children().hasClass('hljs')) {
+          lang = $pre[0].children[0].classList[1];
+        } else if ($pre[0].getAttribute('data-language')) {
+          lang = $pre[0].getAttribute('data-language');
+        } else if ($pre.parent().hasClass('sourceCode') && $pre[0].children.length > 0 && $pre[0].children[0].classList.length >= 2) {
+          lang = $pre[0].children[0].classList[1];
+          $pre.parent().addClass('code-wrapper');
+        } else if ($pre.parent().hasClass('markdown-body') && $pre[0].classList.length === 0) {
+          $pre.wrap('<div class="code-wrapper"></div>');
+        }
+        lang = lang.toUpperCase().replace('NONE', CONFIG.code_language.default);
+      }
+      $pre.append(copyTmpl.replace('LANG', lang).replace('code-widget">',
+        getBgClass($pre[0]) + (enableCopy ? ' code-widget copy-btn" data-clipboard-snippet><i class="iconfont icon-copy"></i>' : ' code-widget">')));
+
+      if (enableCopy) {
+        Fluid.utils.createScript('https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js', function() {
+          var clipboard = new window.ClipboardJS('.copy-btn', {
+            target: function(trigger) {
+              var nodes = trigger.parentNode.childNodes;
+              for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].tagName === 'CODE') {
+                  return nodes[i];
+                }
+              }
+            }
+          });
+          clipboard.on('success', function(e) {
+            e.clearSelection();
+            e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
+            setTimeout(function() {
+              e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
+            }, 2000);
+          });
+        });
+      }
+    });
+  })();
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
