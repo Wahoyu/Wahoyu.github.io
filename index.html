@@ -66,7 +66,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":3},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.0","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":3},"lazyload":{"enable":true,"loading_img":"/img/default2.png","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -123,6 +123,18 @@
               <a class="nav-link" href="/archives/">
                 <i class="iconfont icon-archive-fill"></i>
                 归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
               </a>
             </li>
           
@@ -211,20 +223,20 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/07/26/BookManagerSSM/" target="_self">
-          <img src="/image/22.07.26/1.jpg" srcset="/img/loading.gif" lazyload alt="基于SSM+Security的图书管理系统">
+        <a href="/2022/07/26/Book_ManagerSSM/" target="_blank">
+          <img src="/image/22.07.26/1.jpg" srcset="/img/default2.png" lazyload alt="基于SSM+Security的图书管理系统">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/07/26/BookManagerSSM/" target="_self">
+        <a href="/2022/07/26/Book_ManagerSSM/" target="_blank">
           基于SSM+Security的图书管理系统
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2022/07/26/BookManagerSSM/" target="_self">
+      <a class="index-excerpt" href="/2022/07/26/Book_ManagerSSM/" target="_blank">
         <div>
           
           本项目是基于SSM的图书管理系统，使用Thymeleaf作为前端模板，使用SpringSecurity进行用户登录权限相关的管理操作。
@@ -241,17 +253,34 @@
           </div>
         
         
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%BC%80%E5%8F%91/" class="category-chain-item">开发</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/Java/">#Java</a>
             
-              <a href="/tags/Spring/">#Spring</a>
-            
-              <a href="/tags/SpringMVC/">#SpringMVC</a>
-            
-              <a href="/tags/Mybatis/">#Mybatis</a>
+              <a href="/tags/%E5%AE%9E%E6%88%98/">#实战</a>
             
           </div>
         
@@ -263,20 +292,20 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/07/06/JavaWeb/" target="_self">
-          <img src="/image/22.07.06/photo.png" srcset="/img/loading.gif" lazyload alt="基于Java Web的图书管理系统">
+        <a href="/2022/07/06/JavaWeb/" target="_blank">
+          <img src="/image/22.07.06/photo.png" srcset="/img/default2.png" lazyload alt="基于Java Web的图书管理系统">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/07/06/JavaWeb/" target="_self">
+        <a href="/2022/07/06/JavaWeb/" target="_blank">
           基于Java Web的图书管理系统
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2022/07/06/JavaWeb/" target="_self">
+      <a class="index-excerpt" href="/2022/07/06/JavaWeb/" target="_blank">
         <div>
           
           使用Servlet+Mybatis+Thymeleaf等框架与技术对控制台管理系统的进一步完善，使用Thymeleaf作为前端模板进行展示实现有效的前后端分离。
@@ -293,13 +322,34 @@
           </div>
         
         
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%BC%80%E5%8F%91/" class="category-chain-item">开发</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/Java/">#Java</a>
             
-              <a href="/tags/Java-Web/">#Java Web</a>
+              <a href="/tags/%E5%AE%9E%E6%88%98/">#实战</a>
             
           </div>
         
@@ -311,20 +361,20 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/06/27/%E5%9F%BA%E4%BA%8EMybatis-JUL-Lombok-Maven%E7%9A%84%E5%9B%BE%E4%B9%A6%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%EF%BC%88%E5%B8%A6%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%EF%BC%89/" target="_self">
-          <img src="/image/22.06.27/1.jpg" srcset="/img/loading.gif" lazyload alt="基于Mybatis的图书管理系统">
+        <a href="/2022/06/27/%E5%9F%BA%E4%BA%8EMybatis-JUL-Lombok-Maven%E7%9A%84%E5%9B%BE%E4%B9%A6%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%EF%BC%88%E5%B8%A6%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%EF%BC%89/" target="_blank">
+          <img src="/image/22.06.27/1.jpg" srcset="/img/default2.png" lazyload alt="基于Mybatis的图书管理系统">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/06/27/%E5%9F%BA%E4%BA%8EMybatis-JUL-Lombok-Maven%E7%9A%84%E5%9B%BE%E4%B9%A6%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%EF%BC%88%E5%B8%A6%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%EF%BC%89/" target="_self">
+        <a href="/2022/06/27/%E5%9F%BA%E4%BA%8EMybatis-JUL-Lombok-Maven%E7%9A%84%E5%9B%BE%E4%B9%A6%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%EF%BC%88%E5%B8%A6%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%EF%BC%89/" target="_blank">
           基于Mybatis的图书管理系统
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2022/06/27/%E5%9F%BA%E4%BA%8EMybatis-JUL-Lombok-Maven%E7%9A%84%E5%9B%BE%E4%B9%A6%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%EF%BC%88%E5%B8%A6%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%EF%BC%89/" target="_self">
+      <a class="index-excerpt" href="/2022/06/27/%E5%9F%BA%E4%BA%8EMybatis-JUL-Lombok-Maven%E7%9A%84%E5%9B%BE%E4%B9%A6%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%EF%BC%88%E5%B8%A6%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%EF%BC%89/" target="_blank">
         <div>
           
           本项目是基于Mybatis+JUL+Lombok+Maven的图书管理系统（带单元测试）
@@ -341,13 +391,34 @@
           </div>
         
         
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%BC%80%E5%8F%91/" class="category-chain-item">开发</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/Java/">#Java</a>
             
-              <a href="/tags/Mybatis/">#Mybatis</a>
+              <a href="/tags/%E5%AE%9E%E6%88%98/">#实战</a>
             
           </div>
         
@@ -359,20 +430,20 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/06/19/%E5%85%B3%E4%BA%8E%E5%8F%8D%E5%B0%84%E4%B8%8E%E6%B3%A8%E8%A7%A3%E7%9A%84%E7%90%86%E8%A7%A3%E4%B8%8E%E6%80%BB%E7%BB%93/" target="_self">
-          <img src="/image/fanshe.jpg" srcset="/img/loading.gif" lazyload alt="关于反射与注解的理解与总结">
+        <a href="/2022/06/19/%E5%85%B3%E4%BA%8E%E5%8F%8D%E5%B0%84%E4%B8%8E%E6%B3%A8%E8%A7%A3%E7%9A%84%E7%90%86%E8%A7%A3%E4%B8%8E%E6%80%BB%E7%BB%93/" target="_blank">
+          <img src="/image/fanshe.jpg" srcset="/img/default2.png" lazyload alt="关于反射与注解的理解与总结">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/06/19/%E5%85%B3%E4%BA%8E%E5%8F%8D%E5%B0%84%E4%B8%8E%E6%B3%A8%E8%A7%A3%E7%9A%84%E7%90%86%E8%A7%A3%E4%B8%8E%E6%80%BB%E7%BB%93/" target="_self">
+        <a href="/2022/06/19/%E5%85%B3%E4%BA%8E%E5%8F%8D%E5%B0%84%E4%B8%8E%E6%B3%A8%E8%A7%A3%E7%9A%84%E7%90%86%E8%A7%A3%E4%B8%8E%E6%80%BB%E7%BB%93/" target="_blank">
           关于反射与注解的理解与总结
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2022/06/19/%E5%85%B3%E4%BA%8E%E5%8F%8D%E5%B0%84%E4%B8%8E%E6%B3%A8%E8%A7%A3%E7%9A%84%E7%90%86%E8%A7%A3%E4%B8%8E%E6%80%BB%E7%BB%93/" target="_self">
+      <a class="index-excerpt" href="/2022/06/19/%E5%85%B3%E4%BA%8E%E5%8F%8D%E5%B0%84%E4%B8%8E%E6%B3%A8%E8%A7%A3%E7%9A%84%E7%90%86%E8%A7%A3%E4%B8%8E%E6%80%BB%E7%BB%93/" target="_blank">
         <div>
           
           反向追寻创建class对象并对class进行修改
@@ -389,6 +460,27 @@
           </div>
         
         
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%BC%80%E5%8F%91/" class="category-chain-item">开发</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
@@ -405,20 +497,20 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/06/10/%E7%AE%80%E5%8D%95%E7%AE%97%E6%B3%95%EF%BC%88Java%E5%AE%9E%E7%8E%B0%EF%BC%89/" target="_self">
-          <img src="/image/22.06.29/1.jpg" srcset="/img/loading.gif" lazyload alt="简单算法（Java实现）">
+        <a href="/2022/06/10/%E7%AE%80%E5%8D%95%E7%AE%97%E6%B3%95%EF%BC%88Java%E5%AE%9E%E7%8E%B0%EF%BC%89/" target="_blank">
+          <img src="/image/22.06.29/1.jpg" srcset="/img/default2.png" lazyload alt="排序与搜索算法（Java实现）">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/06/10/%E7%AE%80%E5%8D%95%E7%AE%97%E6%B3%95%EF%BC%88Java%E5%AE%9E%E7%8E%B0%EF%BC%89/" target="_self">
-          简单算法（Java实现）
+        <a href="/2022/06/10/%E7%AE%80%E5%8D%95%E7%AE%97%E6%B3%95%EF%BC%88Java%E5%AE%9E%E7%8E%B0%EF%BC%89/" target="_blank">
+          排序与搜索算法（Java实现）
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2022/06/10/%E7%AE%80%E5%8D%95%E7%AE%97%E6%B3%95%EF%BC%88Java%E5%AE%9E%E7%8E%B0%EF%BC%89/" target="_self">
+      <a class="index-excerpt" href="/2022/06/10/%E7%AE%80%E5%8D%95%E7%AE%97%E6%B3%95%EF%BC%88Java%E5%AE%9E%E7%8E%B0%EF%BC%89/" target="_blank">
         <div>
           
           一些排序算法与搜索算法的个人记录
@@ -435,13 +527,34 @@
           </div>
         
         
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%BC%80%E5%8F%91/" class="category-chain-item">开发</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">#数据结构</a>
+              <a href="/tags/Java/">#Java</a>
             
-              <a href="/tags/%E7%AE%97%E6%B3%95/">#算法</a>
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">#数据结构与算法</a>
             
           </div>
         
@@ -453,20 +566,20 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/06/08/Java%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/" target="_self">
-          <img src="/image/shujujiegou.jpg" srcset="/img/loading.gif" lazyload alt="Java数据结构简单实现">
+        <a href="/2022/06/08/Java%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/" target="_blank">
+          <img src="/image/shujujiegou.jpg" srcset="/img/default2.png" lazyload alt="数据结构实现（Java）">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/06/08/Java%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/" target="_self">
-          Java数据结构简单实现
+        <a href="/2022/06/08/Java%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/" target="_blank">
+          数据结构实现（Java）
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2022/06/08/Java%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/" target="_self">
+      <a class="index-excerpt" href="/2022/06/08/Java%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/" target="_blank">
         <div>
           
           对Java数据结构的简单实现（持续更新）
@@ -483,11 +596,34 @@
           </div>
         
         
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%BC%80%E5%8F%91/" class="category-chain-item">开发</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/Java/">#Java</a>
+            
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">#数据结构与算法</a>
             
           </div>
         
@@ -499,20 +635,20 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/06/05/SQL%E5%9F%BA%E7%A1%80%E8%AF%AD%E5%8F%A5%E6%97%A5%E5%B8%B8%E7%BB%83%E4%B9%A0/" target="_self">
-          <img src="/image/sql.jpg" srcset="/img/loading.gif" lazyload alt="SQL基础语句日常练习">
+        <a href="/2022/06/05/SQL%E5%9F%BA%E7%A1%80%E8%AF%AD%E5%8F%A5%E6%97%A5%E5%B8%B8%E7%BB%83%E4%B9%A0/" target="_blank">
+          <img src="/image/sql.jpg" srcset="/img/default2.png" lazyload alt="SQL语句练习">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/06/05/SQL%E5%9F%BA%E7%A1%80%E8%AF%AD%E5%8F%A5%E6%97%A5%E5%B8%B8%E7%BB%83%E4%B9%A0/" target="_self">
-          SQL基础语句日常练习
+        <a href="/2022/06/05/SQL%E5%9F%BA%E7%A1%80%E8%AF%AD%E5%8F%A5%E6%97%A5%E5%B8%B8%E7%BB%83%E4%B9%A0/" target="_blank">
+          SQL语句练习
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2022/06/05/SQL%E5%9F%BA%E7%A1%80%E8%AF%AD%E5%8F%A5%E6%97%A5%E5%B8%B8%E7%BB%83%E4%B9%A0/" target="_self">
+      <a class="index-excerpt" href="/2022/06/05/SQL%E5%9F%BA%E7%A1%80%E8%AF%AD%E5%8F%A5%E6%97%A5%E5%B8%B8%E7%BB%83%E4%B9%A0/" target="_blank">
         <div>
           
           一套数据库练习流程帮你练习常用SQL语句
@@ -529,11 +665,32 @@
           </div>
         
         
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%BC%80%E5%8F%91/" class="category-chain-item">开发</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/SQL/">#SQL</a>
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">#数据库</a>
             
           </div>
         
@@ -545,20 +702,20 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/06/03/%E8%A7%A3%E5%86%B3Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E6%AF%8F%E6%AC%A1%E8%A6%81source-etc-profile%E9%97%AE%E9%A2%98/" target="_self">
-          <img src="/image/source.jpg" srcset="/img/loading.gif" lazyload alt="解决Linux环境变量每次要source /etc/profile问题">
+        <a href="/2022/06/03/%E8%A7%A3%E5%86%B3Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E6%AF%8F%E6%AC%A1%E8%A6%81source-etc-profile%E9%97%AE%E9%A2%98/" target="_blank">
+          <img src="/image/source.jpg" srcset="/img/default2.png" lazyload alt="解决Linux环境变量每次要source /etc/profile问题">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/06/03/%E8%A7%A3%E5%86%B3Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E6%AF%8F%E6%AC%A1%E8%A6%81source-etc-profile%E9%97%AE%E9%A2%98/" target="_self">
+        <a href="/2022/06/03/%E8%A7%A3%E5%86%B3Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E6%AF%8F%E6%AC%A1%E8%A6%81source-etc-profile%E9%97%AE%E9%A2%98/" target="_blank">
           解决Linux环境变量每次要source /etc/profile问题
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2022/06/03/%E8%A7%A3%E5%86%B3Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E6%AF%8F%E6%AC%A1%E8%A6%81source-etc-profile%E9%97%AE%E9%A2%98/" target="_self">
+      <a class="index-excerpt" href="/2022/06/03/%E8%A7%A3%E5%86%B3Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E6%AF%8F%E6%AC%A1%E8%A6%81source-etc-profile%E9%97%AE%E9%A2%98/" target="_blank">
         <div>
           
           Linux的profile与权限相关问题
@@ -574,6 +731,27 @@
             </time>
           </div>
         
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%BC%80%E5%8F%91/" class="category-chain-item">开发</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
         
         
           <div class="post-meta">
@@ -591,23 +769,23 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/06/01/hello-world/" target="_self">
-          <img src="/image/HelloWorld.jpg" srcset="/img/loading.gif" lazyload alt="Hello World">
+        <a href="/2022/06/01/hello-world/" target="_blank">
+          <img src="/image/HelloWorld.jpg" srcset="/img/default2.png" lazyload alt="Hexo - Fluid">
         </a>
       </div>
     
     <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2022/06/01/hello-world/" target="_self">
-          Hello World
+        <a href="/2022/06/01/hello-world/" target="_blank">
+          Hexo - Fluid
         </a>
       </h1>
 
-      <a class="index-excerpt" href="/2022/06/01/hello-world/" target="_self">
+      <a class="index-excerpt" href="/2022/06/01/hello-world/" target="_blank">
         <div>
           
-          HelloWorld表示尊敬！
+          记录Hexo框架使用和主题修改过程。
         </div>
       </a>
 
@@ -621,13 +799,32 @@
           </div>
         
         
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E4%B8%BB%E9%A2%98/" class="category-chain-item">主题</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/Hexo/">#Hexo</a>
-            
-              <a href="/tags/Fluid/">#Fluid</a>
             
           </div>
         
